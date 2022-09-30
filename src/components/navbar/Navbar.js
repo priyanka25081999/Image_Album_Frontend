@@ -1,4 +1,5 @@
 import React from "react";
+import AddIcon from "@mui/icons-material/Add";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,7 +9,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
-const Navbar = () => {
+const Navbar = ({ albums, setDialogOpen }) => {
   const [anchorEl, setAnchorEl] = React.useState();
 
   const handleMenu = (event) => {
@@ -26,14 +27,17 @@ const Navbar = () => {
             Photos
           </Typography>
           <div>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
+            {albums.length > 0 ? (
+              <IconButton
+                size="large"
+                onClick={() => setDialogOpen(true)}
+                color="inherit"
+              >
+                <AddIcon />
+              </IconButton>
+            ) : null}
+
+            <IconButton size="large" onClick={handleMenu} color="inherit">
               <AccountCircle />
             </IconButton>
             <Menu
