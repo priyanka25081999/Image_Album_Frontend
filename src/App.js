@@ -13,7 +13,7 @@ function App() {
         <Route path={LANDING_PAGE_URL} element={<DashboardPage />} />
 
         {/* Dashboard Pages */}
-        <Route path={"/album/:id"} element={<ImagesPage />} />
+        <Route path={"/album/:name"} element={<ImagesPage />} />
 
         <Route path="*" element={<Navigate to={LANDING_PAGE_URL} />} />
       </Routes>

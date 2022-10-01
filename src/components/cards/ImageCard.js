@@ -3,7 +3,7 @@ import React from "react";
 const ImageCard = ({ item }) => {
   return (
     <Card sx={{ height: "100%", minHeight: "200px" }}>
-      <CardMedia component="img" height="100%" image={item.imageUrl} />
+      <CardMedia component="img" height="100%" image={item.ETag} />
     </Card>
   );
 };

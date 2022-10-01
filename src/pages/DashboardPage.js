@@ -1,12 +1,11 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 import axios from "axios";
+import AlbumCard from "../components/cards/AlbumCard";
 import Navbar from "../components/navbar/Navbar";
 import CreateNewAlbumCard from "../components/cards/CreateNewAlbumCard";
 import CreateNewAlbumDialog from "../components/dialog/CreateNewAlbumDialog";
 import CircularProgress from "@mui/material/CircularProgress";
-
-import AlbumCard from "../components/cards/AlbumCard";
 import { BACKEND_URL } from "../contants/Backend";
 
 const DashboardPage = () => {
