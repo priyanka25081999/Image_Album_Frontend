@@ -1,14 +1,51 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
+import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
 import CreateNewAlbumCard from "../components/cards/CreateNewAlbumCard";
 import CreateNewAlbumDialog from "../components/dialog/CreateNewAlbumDialog";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import AlbumCard from "../components/cards/AlbumCard";
+import { BACKEND_URL } from "../contants/Backend";
 
 const DashboardPage = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [albums, setAlbums] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
 
+  React.useEffect(() => {
+    axios
+      .get(BACKEND_URL + "/album/")
+      .then((res) => {
+        console.log("Res: ", res);
+        const { data } = res;
+
+        if (data.isDone) setAlbums([...data.buckets]);
+
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("Err: ", err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          widht: "100%",
+          height: "100vh",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <Box>
       <CreateNewAlbumDialog

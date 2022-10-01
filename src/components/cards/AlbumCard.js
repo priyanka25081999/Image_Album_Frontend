@@ -9,11 +9,11 @@ const AlbumCard = ({ item }) => {
   return (
     <Card
       sx={{ height: "100%", minHeight: "200px", cursor: "pointer" }}
-      onClick={() => navigate(IMAGES_PAGE_URL + "/" + item.id)}
+      onClick={() => navigate(IMAGES_PAGE_URL + "/" + item.Name)}
     >
       <CardContent>
-        <Typography variant="h5">{item.albumName}</Typography>
-        <Typography variant="body1">{item.albumDescription}</Typography>
+        <Typography variant="h5">{item.Name}</Typography>
+        <Typography variant="body2">{item.CreationDate}</Typography>
       </CardContent>
     </Card>
   );
