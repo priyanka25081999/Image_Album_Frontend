@@ -9,7 +9,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 
-const Navbar = ({ albums, setDialogOpen }) => {
+const Navbar = ({ isCreateAlbumAllowed, albums, setDialogOpen }) => {
   const [anchorEl, setAnchorEl] = React.useState();
 
   const handleMenu = (event) => {
@@ -27,14 +27,16 @@ const Navbar = ({ albums, setDialogOpen }) => {
             Photos
           </Typography>
           <div>
-            {albums.length > 0 ? (
-              <IconButton
-                size="large"
-                onClick={() => setDialogOpen(true)}
-                color="inherit"
-              >
-                <AddIcon />
-              </IconButton>
+            {isCreateAlbumAllowed ? (
+              albums.length > 0 ? (
+                <IconButton
+                  size="large"
+                  onClick={() => setDialogOpen(true)}
+                  color="inherit"
+                >
+                  <AddIcon />
+                </IconButton>
+              ) : null
             ) : null}
 
             <IconButton size="large" onClick={handleMenu} color="inherit">
