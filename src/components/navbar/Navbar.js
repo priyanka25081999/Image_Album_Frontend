@@ -9,6 +9,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { useLocation } from "react-router-dom";
 
 const Navbar = ({
   isCreateAlbumAllowed,
@@ -16,6 +17,9 @@ const Navbar = ({
   albums,
   setDialogOpen,
 }) => {
+  const location = useLocation();
+
+  console.log("Location: ", location);
   const [anchorEl, setAnchorEl] = React.useState();
 
   const handleMenu = (event) => {
@@ -30,7 +34,11 @@ const Navbar = ({
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            {location.pathname === "/"
+              ? "Albums"
+              : location.pathname.includes("/album/")
+              ? location.pathname.split("/")[2]
+              : "Albums"}
           </Typography>
           <div>
             {isCreateAlbumAllowed ? (
