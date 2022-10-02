@@ -8,8 +8,14 @@ import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-const Navbar = ({ isCreateAlbumAllowed, albums, setDialogOpen }) => {
+const Navbar = ({
+  isCreateAlbumAllowed,
+  isUploadImageAllowed,
+  albums,
+  setDialogOpen,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState();
 
   const handleMenu = (event) => {
@@ -37,6 +43,16 @@ const Navbar = ({ isCreateAlbumAllowed, albums, setDialogOpen }) => {
                   <AddIcon />
                 </IconButton>
               ) : null
+            ) : null}
+
+            {isUploadImageAllowed ? (
+              <IconButton
+                size="large"
+                onClick={() => setDialogOpen(true)}
+                color="inherit"
+              >
+                <CloudUploadIcon />
+              </IconButton>
             ) : null}
 
             <IconButton size="large" onClick={handleMenu} color="inherit">

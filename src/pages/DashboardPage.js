@@ -56,6 +56,7 @@ const DashboardPage = () => {
       {/* Navbar */}
       <Navbar
         isCreateAlbumAllowed={true}
+        isUploadImageAllowed={false}
         albums={albums}
         setDialogOpen={setDialogOpen}
       />
