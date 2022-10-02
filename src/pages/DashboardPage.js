@@ -6,7 +6,7 @@ import Navbar from "../components/navbar/Navbar";
 import CreateNewAlbumCard from "../components/cards/CreateNewAlbumCard";
 import CreateNewAlbumDialog from "../components/dialog/CreateNewAlbumDialog";
 import CircularProgress from "@mui/material/CircularProgress";
-import { BACKEND_URL } from "../contants/Backend";
+import { ALBUM_BACKEND } from "../contants/Backend";
 
 const DashboardPage = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -14,8 +14,10 @@ const DashboardPage = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
+    console.log("ALBUM_BACKEND:", process.env.REACT_APP_ALBUM_BACKEND);
+
     axios
-      .get(BACKEND_URL + "/album/")
+      .get(ALBUM_BACKEND + "/album/")
       .then((res) => {
         console.log("Res: ", res);
         const { data } = res;

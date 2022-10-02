@@ -1,1 +1,2 @@
-export const BACKEND_URL = "http://localhost:3001";
+export const ALBUM_BACKEND = process.env.REACT_APP_ALBUM_BACKEND;
+export const IMAGE_BACKEND = process.env.REACT_APP_IMAGE_BACKEND;

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IMAGES_PAGE_URL } from "../../contants/Urls";
-import { BACKEND_URL } from "../../contants/Backend";
+import { ALBUM_BACKEND } from "../../contants/Backend";
 import React from "react";
 import axios from "axios";
 
@@ -17,7 +17,7 @@ const AlbumCard = ({ item, setAlbums }) => {
 
   const deleteBucket = async () => {
     await axios
-      .delete(BACKEND_URL + `/album/?bucket=${item.Name}`)
+      .delete(ALBUM_BACKEND + `/album/?bucket=${item.Name}`)
       .then((res) => {
         console.log("Res: ", res);
 

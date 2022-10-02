@@ -5,7 +5,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { BACKEND_URL } from "../../contants/Backend";
+import { IMAGE_BACKEND } from "../../contants/Backend";
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
@@ -15,7 +15,7 @@ const ImageCard = ({ item, bucketName, setImages }) => {
 
   const handleDelete = () => {
     axios
-      .delete(BACKEND_URL + `/image/?bucket=${bucketName}&key=${item.Key}`)
+      .delete(IMAGE_BACKEND + `/image/?bucket=${bucketName}&key=${item.Key}`)
       .then((res) => {
         const { data } = res;
         if (data.isDone) {

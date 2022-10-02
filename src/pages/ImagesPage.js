@@ -5,7 +5,7 @@ import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
 import ImageCard from "../components/cards/ImageCard";
 import CircularProgress from "@mui/material/CircularProgress";
-import { BACKEND_URL } from "../contants/Backend";
+import { IMAGE_BACKEND } from "../contants/Backend";
 import UploadImageDialog from "../components/dialog/UploadImageDialog";
 
 const ImagesPage = (props) => {
@@ -16,7 +16,7 @@ const ImagesPage = (props) => {
 
   React.useEffect(() => {
     axios
-      .get(BACKEND_URL + `/image/?bucket=${name}`)
+      .get(IMAGE_BACKEND + `/image/?bucket=${name}`)
       .then((res) => {
         console.log("Res: ", res);
         const { data } = res;

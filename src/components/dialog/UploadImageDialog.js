@@ -17,7 +17,7 @@ import { useDropzone } from "react-dropzone";
 import ImageIcon from "@mui/icons-material/Image";
 import React from "react";
 import axios from "axios";
-import { BACKEND_URL } from "../../contants/Backend";
+import { IMAGE_BACKEND } from "../../contants/Backend";
 
 const baseStyle = {
   flex: 1,
@@ -75,7 +75,7 @@ const UploadImageDialog = ({ dialogOpen, setDialogOpen, bucket }) => {
       formData.append("bucket", bucket);
 
       axios
-        .post(BACKEND_URL + "/image/", formData)
+        .post(IMAGE_BACKEND + "/image/", formData)
         .then((res) => {
           console.log("FILE UPLOAD: ", res);
         })
