@@ -71,7 +71,7 @@ const DashboardPage = () => {
           ) : (
             albums.map((item, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
-                <AlbumCard item={item} />
+                <AlbumCard item={item} setAlbums={setAlbums} />
               </Grid>
             ))
           )}
