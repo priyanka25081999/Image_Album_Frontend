@@ -1,9 +1,54 @@
-import { Card, CardMedia } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardHeader,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import { BACKEND_URL } from "../../contants/Backend";
 import React from "react";
-const ImageCard = ({ item, bucketName }) => {
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+
+const ImageCard = ({ item, bucketName, setImages }) => {
   console.log("Item: ", item);
+
+  const handleDelete = () => {
+    axios
+      .delete(BACKEND_URL + `/image/?bucket=${bucketName}&key=${item.Key}`)
+      .then((res) => {
+        const { data } = res;
+        if (data.isDone) {
+          setImages((prevData) => {
+            return prevData.filter((fiter_item) => fiter_item.Key !== item.Key);
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <Card sx={{ height: "300px" }}>
+    <Card sx={{ height: "350px" }}>
+      <CardHeader
+        sx={{ borderBottom: "2px solid #ddd" }}
+        action={
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        }
+        title={
+          <Typography
+            variant="body1"
+            sx={{
+              textOverflow: "ellipsis",
+              width: "150px",
+              overflow: "hidden",
+            }}
+          >
+            {item.Key}
+          </Typography>
+        }
+      />
       <CardMedia
         component="img"
         height="100%"
