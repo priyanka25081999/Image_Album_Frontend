@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React from "react";
 import axios from "axios";
 import Navbar from "../components/navbar/Navbar";
@@ -9,6 +9,7 @@ import { IMAGE_BACKEND } from "../contants/Backend";
 import UploadImageDialog from "../components/dialog/UploadImageDialog";
 
 const ImagesPage = (props) => {
+  const navigate = useNavigate();
   const { name } = useParams();
   const [images, setImages] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -38,7 +39,13 @@ const ImagesPage = (props) => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log("Err: ", err.response);
+        if (
+          err.response.data.error.message ===
+          "The specified bucket does not exist"
+        ) {
+          navigate("/");
+        }
+        console.log("Err: ", err.response.data.error.message);
         setIsLoading(false);
       });
   }, []);
