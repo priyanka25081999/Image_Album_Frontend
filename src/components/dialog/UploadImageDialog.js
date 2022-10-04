@@ -12,6 +12,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { useDropzone } from "react-dropzone";
 import ImageIcon from "@mui/icons-material/Image";
@@ -48,6 +50,11 @@ const rejectStyle = {
 };
 
 const UploadImageDialog = ({ dialogOpen, setDialogOpen, bucket }) => {
+  const [open, setOpen] = React.useState(false);
+  const [severity, setSeverity] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [isUploading, setIsUploading] = React.useState(false);
+
   const {
     acceptedFiles,
     getRootProps,
@@ -68,6 +75,7 @@ const UploadImageDialog = ({ dialogOpen, setDialogOpen, bucket }) => {
   );
 
   const uploadFiles = () => {
+    setIsUploading(true);
     acceptedFiles.map((item, index) => {
       const formData = new FormData();
       formData.append("file", item);
@@ -78,61 +86,94 @@ const UploadImageDialog = ({ dialogOpen, setDialogOpen, bucket }) => {
         .post(IMAGE_BACKEND + "/image/", formData)
         .then((res) => {
           console.log("FILE UPLOAD: ", res);
+          setSeverity("success");
+          setMessage(item.name + " Uploaded Successfully!");
+          setOpen(true);
+          if (index === acceptedFiles.length - 1) {
+            setIsUploading(false);
+          }
         })
         .catch((err) => {
           console.log("FILE UPLOAD ERROR: ", err);
+          setSeverity("success");
+          setMessage(item.name + " Not Uploaded");
+          setOpen(true);
+          if (index === acceptedFiles.length - 1) {
+            setIsUploading(false);
+          }
+          return;
         });
     });
   };
   return (
-    <Dialog maxWidth="lg" open={dialogOpen}>
-      <DialogTitle>Upload Photos</DialogTitle>
-      <DialogContent>
-        {/* Form */}
-        <Box>
-          <Grid container spacing={2}>
-            {/* Upload */}
-            <Grid item xs={12}>
-              <Box {...getRootProps({ className: "dropzone", style })}>
-                <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-              </Box>
-            </Grid>
-            {acceptedFiles.length > 0 ? (
-              <Grid item xs={12}>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  Files
-                </Typography>
-
-                <List>
-                  {acceptedFiles.map((item, index) => (
-                    <ListItem key={index} disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <ImageIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={item.path} />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
-                </List>
-
-                <Button
-                  variant="contained"
-                  onClick={() => uploadFiles()}
-                  disableElevation
-                >
-                  Upload
-                </Button>
+    <>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+      <Dialog maxWidth="lg" open={dialogOpen}>
+        <DialogTitle>Upload Photos</DialogTitle>
+        <DialogContent>
+          {/* Form */}
+          <Box>
+            <Grid container spacing={2}>
+              {/* Upload */}
+              <Grid
+                item
+                xs={12}
+                sx={{ display: isUploading ? "none" : "block" }}
+              >
+                <Box {...getRootProps({ className: "dropzone", style })}>
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                </Box>
               </Grid>
-            ) : null}
-          </Grid>
-        </Box>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setDialogOpen(false)}>Close</Button>
-      </DialogActions>
-    </Dialog>
+              {acceptedFiles.length > 0 ? (
+                <Grid item xs={12}>
+                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                    Files
+                  </Typography>
+
+                  <List>
+                    {acceptedFiles.map((item, index) => (
+                      <ListItem key={index} disablePadding>
+                        <ListItemButton>
+                          <ListItemIcon>
+                            <ImageIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={item.path} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+
+                  <Button
+                    variant="contained"
+                    onClick={() => uploadFiles()}
+                    disableElevation
+                    disabled={isUploading}
+                  >
+                    Upload
+                  </Button>
+                </Grid>
+              ) : null}
+            </Grid>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

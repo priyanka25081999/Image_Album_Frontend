@@ -1,6 +1,7 @@
 {
   "name": "photo-album-frontend",
   "version": "0.1.0",
+  "homepage": "https://photo-album-app.netlify.app",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
