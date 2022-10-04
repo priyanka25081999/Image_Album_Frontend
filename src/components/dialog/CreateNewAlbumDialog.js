@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { v4 } from "uuid";
-import { IMAGE_BACKEND } from "../../contants/Backend";
+import { ALBUM_BACKEND } from "../../contants/Backend";
 import axios from "axios";
 import React from "react";
 
@@ -38,7 +38,7 @@ const CreateNewAlbumDialog = ({ setAlbums, dialogOpen, setDialogOpen }) => {
     console.log(final_album_name);
 
     await axios
-      .put(IMAGE_BACKEND + `/album/?bucket=${final_album_name}`)
+      .put(ALBUM_BACKEND + `/album/?bucket=${final_album_name}`)
       .then((res) => {
         console.log("Res: ", res);
         setAlbums((preVal) => [
